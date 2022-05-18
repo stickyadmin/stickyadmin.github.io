@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StcikyAdmin</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+<div  class="container">
+    <script src="https://unpkg.com/stein-js-client"></script>
+<script>
+function addorders(){
+    let name = document.getElementById("form_name").value;
+    let order = document.getElementById("form_order").value;
+    let cost = document.getElementById("form_cost").value;
+    let uname = document.getElementById("uname").value;
+    let upass = document.getElementById("upass").value;
+    const store = new SteinStore(
+    "https://api.steinhq.com/v1/storages/6284f12c4906bb053744d02b"
+  );
+
+  store
+  .append("Sheet1",[
+
+      
+      {
+        name: name,
+        order: order,
+        cost: cost
+      }
+    ],{authentication: { username: uname , password: upass }})
+    .then(data => {
+      const request = new XMLHttpRequest();
+      request.open("POST", "https://discord.com/api/webhooks/976501367302656000/nE6D2aVRpJNrcGCJRd7VGrmoFV3tnluz7Yl7whYcerTkHvp6IABdJorP_wVNBkIcRNyS");
+
+      request.setRequestHeader('Content-type', 'application/json');
+
+      const params = {
+        username: "StickyBot",
+        avatar_url: "",
+        content: "Admin saytında məhsul əlavə olundu! Detallar: AD: "+name+" SİFARİŞ: "+order+" QİYMƏT: "+cost
+      }
+
+      request.send(JSON.stringify(params));
+
+      alert()
+    
+    });
+}
+  
+</script>
+    <div style="width: 100px; height: 100px"><img src="logo for database-01-01.svg" ></div>
+    
+    
+    <div class="inputs">
+      <h2>Sifariş əlavə et</h2>
+        
+      <label>Ad</label>
+      <input id="form_name" type="text" placeholder="Sticko" />
+      <label>Sifarişi</label>
+      <input id="form_order" class="sifaris" type="text" placeholder="x pack, y pack bla bla bla" />
+      <br>
+      <label>Qiymət</label>
+      <input id="form_cost" class="qiymet" type="number" placeholder="1" />
+      <button onclick="addorders()" type="submit">Submit</button>
+    </div>
+
+</div>
+
+<div>
+
+</div>
+<div>
+<input id="uname" type="text" placeholder="Sticko" />
+    <br>
+<input id="upass" type="text" placeholder="Sticko" />
+</div>
+</body>
+</html>
